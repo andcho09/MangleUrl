@@ -37,6 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
 						break;
 					case 'Markdown':
 						outputFormat = OutputFormat.markdown;
+						break;
 					default:
 						outputFormat = OutputFormat.displayNameOnly;
 				}
