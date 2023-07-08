@@ -5,7 +5,7 @@ export enum OutputFormat {
 	markdown // A link in Markdown format [<display name>](URL)]
 }
 
-const REGEX_CHARS_TO_REPLACE = /[-+]/g;
+const REGEX_CHARS_TO_REPLACE = /[-+_]/g;
 
 /**
  * For the given the URL and display name to the specified output format.
@@ -58,21 +58,28 @@ export function extract(urlString: string): string {
 		let titleNoSpaces = title.replaceAll(REGEX_CHARS_TO_REPLACE, '');
 		if (hash.toLowerCase().startsWith(titleNoSpaces.toLowerCase())) {
 			result = toFragmentCase(result, hash);
+			hash = hash.substring(titleNoSpaces.length + 1);
 		} else {
 			// Can't use the hash to derive the case, just use sentence case
 			result = toSentenceTitleCase(result);
 		}
 
 		// Append fragment
-		result += '#' + toSentenceTitleCase(hash.substring(titleNoSpaces.length + 1));
+		hash = hash.replaceAll(REGEX_CHARS_TO_REPLACE, ' ').trim();
+		result += '#' + toSentenceTitleCase(hash);
 
 	} else {
-		result = toSentenceTitleCase(result);
+		result = toSentenceTitleCase(title.replaceAll(REGEX_CHARS_TO_REPLACE, ' '));
 	}
 
 	return result;
 }
 
+/**
+ * Converts a space separated sentence phrase and changes it to title case (i.e. the first letter of each word is upper case). The case of other letters is not adjusted to handle cases where upper casing has already been applied.
+ * @param text the sentence
+ * @returns the sentence in title case
+ */
 function toSentenceTitleCase(text: string): string {
 	let words: string[] = text.split(' ');
 	words = words.map(function (word) {
@@ -81,6 +88,12 @@ function toSentenceTitleCase(text: string): string {
 	return words.join(' ');
 }
 
+/**
+ * Converts the given sentence using the same case as given fragment. This is useful in sites such as Confluence where the path is always lower case but the fragment has the case of the title of the page.
+ * @param text the sentence with spaces (this function doesn't add new spaces)
+ * @param fragment the fragment which must not have space. Can be longer than the sentence (i.e. has a genuine fragment at the end)
+ * @returns the sentence using the fragment's case
+ */
 function toFragmentCase(text: string, fragment: string): string {
 	let result: string[] = [];
 	let j: number = 0;

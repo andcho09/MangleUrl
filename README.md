@@ -1,82 +1,45 @@
 # URL Mangler
 
-VS Code extension that formats URLs highlighted in the text editor.
+VS Code extension that formats highlighted URLs in the text editor.
 
 
 ## Features
 
-Recognises URLs for:
+![URL Mangler demonstration](doc/demo.gif)
+
+**Recognises URLs for**:
 
 * Confluence
 * JIRA
+* And can be used on URLs form other sites. YMMV.
 
-Extracts to following formats:
+**Detection of**:
+
+* URL fragments which link to a section within the page. The section title is extracted as part of the display name.
+
+**Extracts display names to the following formats**:
 
 |Format|Pattern|Comments|
 |------|-------|--------|
 |Display name only|``{display name}``|Extracts just the display name only without the URL|
-|html|``<a href="{display name}">{url}</a>``|Extracts as a HTML ``<a>`` anchor tag|
+|HTML href|``<a href="{display name}">{url}</a>``|Extracts as a HTML ``<a>`` anchor tag. Note this is plain text, not text/html. See [Known Issues](#known-issues) section below. |
 |JIRA text syntax|``[{display name}\|{url}]``|Extracts to JIRA's text syntax|
 |Markdown|``[{display name}]({url})``|Extracts to Markdown syntax|
 
-Otherwise reverts to a default behaviour.
-
-❌ TODO Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-❌ If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-❌Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
 
 ## Known Issues
 
-❌ Calling out known issues can help limit users opening duplicate issues against your extension.
+### HTML href output
+
+The HTML href output format updates the clipboard with ``text/plain`` content. This should be ``text/html`` but [VS Code's Clipboard API](https://code.visualstudio.com/api/references/vscode-api#Clipboard) only allows you to write plain text. This could change if issue [141704](https://github.com/microsoft/vscode/issues/141704) is accepted although [163240](https://github.com/microsoft/vscode/issues/163240) was closed because of [incomplete browser compatibility for Clipboard#write](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/write).
+
+### Extension installation
+
+Currently this isn't deployed to the VS Code Marketplace.
+
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
-
-### 0.0.1
+### 0.0.1 - 2023-07-15
 
 Initial release
-
----
-
-❌
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**

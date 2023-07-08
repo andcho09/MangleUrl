@@ -9,12 +9,12 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	//console.log('Congratulations, your extension "urlmanglervscodeextension" is now active!');
+	//console.log('Congratulations, your extension "urlmangler" is now active!');
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('urlmanglervscodeextension.extract', async () => {
+	let disposable = vscode.commands.registerCommand('urlmangler.extract', async () => {
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
 		const editor = vscode.window.activeTextEditor;
@@ -42,7 +42,12 @@ export function activate(context: vscode.ExtensionContext) {
 						outputFormat = OutputFormat.displayNameOnly;
 				}
 				const result = formatDisplayName(highlighted, displayName, outputFormat);
+
+				// TODO this only lets you update the clipboard with text/plain, not text/html which an href would need. See:
+				// https://github.com/microsoft/vscode/issues/163240 - closed as not planned since Clipboard API support isn't there
+				// https://github.com/microsoft/vscode/issues/141704 - still open
 				vscode.env.clipboard.writeText(result);
+
 				vscode.window.showInformationMessage('Mangled URL to clipboard: ' + result);
 			}
 		} else {
