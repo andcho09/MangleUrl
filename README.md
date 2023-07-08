@@ -1,10 +1,27 @@
-# urlmanglervscodeextension README
+# URL Mangler
 
-This is the README for your extension "urlmanglervscodeextension". After writing up a brief description, we recommend including the following sections.
+VS Code extension that formats URLs highlighted in the text editor.
+
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Recognises URLs for:
+
+* Confluence
+* JIRA
+
+Extracts to following formats:
+
+|Format|Pattern|Comments|
+|------|-------|--------|
+|Display name only|``{display name}``|Extracts just the display name only without the URL|
+|html|``<a href="{display name}">{url}</a>``|Extracts as a HTML ``<a>`` anchor tag|
+|JIRA text syntax|``[{display name}\|{url}]``|Extracts to JIRA's text syntax|
+|Markdown|``[{display name}]({url})``|Extracts to Markdown syntax|
+
+Otherwise reverts to a default behaviour.
+
+❌ TODO Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
 
 For example if there is an image subfolder under your extension project workspace:
 
@@ -14,11 +31,11 @@ For example if there is an image subfolder under your extension project workspac
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+❌ If you have any requirements or dependencies, add a section describing those and how to install and configure them.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+❌Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
 
 For example:
 
@@ -29,25 +46,19 @@ This extension contributes the following settings:
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+❌ Calling out known issues can help limit users opening duplicate issues against your extension.
 
 ## Release Notes
 
 Users appreciate release notes as you update your extension.
 
-### 1.0.0
+### 0.0.1
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+Initial release
 
 ---
+
+❌
 
 ## Following extension guidelines
 
