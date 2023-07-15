@@ -1,8 +1,9 @@
 {
-  "name": "urlmanglervscodeextension",
-  "displayName": "UrlManglerVsCodeExtension",
-  "description": "Transforms URLs",
-  "version": "0.0.1",
+  "name": "urlmangler",
+  "displayName": "URL Mangler",
+  "description": "Mangles URLs to extract the human readable display name for the URL.",
+  "publisher": "andcho09",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.79.0"
   },
@@ -10,23 +11,31 @@
     "Other"
   ],
   "activationEvents": [],
-  "main": "./out/extension.js",
+  "main": "./dist/extension",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andcho09/MangleUrl.git"
+  },
   "contributes": {
     "commands": [
       {
-        "command": "urlmanglervscodeextension.extract",
+        "command": "urlmangler.extract",
         "title": "URL Mangler: Extract display name",
         "when": "editorHasSelection"
       }
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "pretest": "npm run compile && npm run lint",
+    "test": "node ./out/test/runTest.js",
+    "test-compile": "tsc -p ./",
+    "vscode:prepublish": "npm run package",
+    "watch": "tsc -watch -p ./",
+    "webpack": "webpack --mode development",
+    "webpack-dev": "webpack --mode development --watch"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
@@ -39,6 +48,9 @@
     "eslint": "^8.41.0",
     "glob": "^8.1.0",
     "mocha": "^10.2.0",
-    "typescript": "^5.1.3"
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4"
   }
 }

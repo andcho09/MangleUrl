@@ -1,5 +1,11 @@
 # Contributing
 
+## TODO
+
+* Test Sharepoint URL
+* Craft pre-release checklist
+* Publish to Marketplace
+
 ## Development Environment Setup
 
 Install requirements:
@@ -24,13 +30,18 @@ Debug using VS Code's _Run and Debug_ using the ``Run Extension`` configuration.
 Reload the window to take the latest code changes.
 
 
-## References
+## Publishing
 
+### Checklist
 
-https://code.visualstudio.com/api/working-with-extensions/testing-extension
-
-Enable on 
-	editorHasSelection
-	https://code.visualstudio.com/api/references/when-clause-contexts
-
-https://code.visualstudio.com/api/references/vscode-api#TextEditor
+1. Update version number in:
+	* [package.json](package.json)
+	* _Release Notes_ section in [README.md](README.md)
+1. Run ``$ vsce package``
+1. Test the package with a [vsce deployment](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#vsce):
+	1. Right-click the generated ``.vsix`` and select ``Install VSIX extension``
+	1. Mangle some URLs
+	1. View the extensions README.md in the Extensions sidebar
+	1. Don't forget to uninstall the extension when you're done testing
+1. Publish with ``$ vsce publish``
+	1. Follow publication status at https://marketplace.visualstudio.com/manage/publishers

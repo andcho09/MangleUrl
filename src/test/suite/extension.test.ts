@@ -25,6 +25,9 @@ suite('URL Mangler Extension Test Suite', () => {
 			assert.strictEqual('CONFCLOUD-74340', extract('https://jira.atlassian.com/browse/CONFCLOUD-74340'));
 			assert.strictEqual('CONFCLOUD-74340', extract('https://jira.atlassian.com/browse/CONFCLOUD-74340?filter=-5'));
 		});
+		it('VS Code Fragment URL', function(){
+			assert.strictEqual('Tips And Tricks#Status Bar', extract('https://code.visualstudio.com/docs/getstarted/tips-and-tricks#_status-bar'));
+		});
 	});
 
 	describe('Extract with output formatting', function () {
