@@ -5,13 +5,13 @@ VS Code extension that formats highlighted URLs in the text editor.
 
 ## Features
 
-![URL Mangler demonstration](doc/demo.gif)
+<img src="doc/demo.gif"/>
 
 **Recognises URLs for**:
 
 * Confluence
 * JIRA
-* And can be used on URLs form other sites. YMMV.
+* And can be used on other sites. YMMV.
 
 **Detection of**:
 
@@ -33,13 +33,9 @@ VS Code extension that formats highlighted URLs in the text editor.
 
 The HTML href output format updates the clipboard with ``text/plain`` content. This should be ``text/html`` but [VS Code's Clipboard API](https://code.visualstudio.com/api/references/vscode-api#Clipboard) only allows you to write plain text. This could change if issue [141704](https://github.com/microsoft/vscode/issues/141704) is accepted although [163240](https://github.com/microsoft/vscode/issues/163240) was closed because of [incomplete browser compatibility for Clipboard#write](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/write).
 
-### Extension installation
-
-Currently this isn't deployed to the VS Code Marketplace.
-
 
 ## Release Notes
 
-### 0.0.1 - 2023-07-15
+### 0.0.2 - 2023-07-15
 
-Initial release
+Initial release onto VS Code Marketplace
