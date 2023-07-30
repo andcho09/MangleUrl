@@ -34,6 +34,7 @@ Reload the window to take the latest code changes.
 
 ### Checklist
 
+1. Lint
 1. Update version number in:
 	* [package.json](package.json)
 	* _Release Notes_ section in [README.md](README.md)

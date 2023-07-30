@@ -5,7 +5,9 @@ export enum OutputFormat {
 	markdown // A link in Markdown format [<display name>](URL)]
 }
 
-const REGEX_CHARS_TO_REPLACE = /[-+_]/g;
+const REGEX_CHARS_TO_REPLACE = /[+_]/g;
+const REGEX_DASH_WORD_SEPARATOR = /[A-z0-0]-[A-z0-0]/g;
+const REGEX_PLUS_WORD_SEPARATOR = /[A-z0-0]\+[A-z0-0]/g;
 
 /**
  * For the given the URL and display name to the specified output format.
@@ -43,7 +45,7 @@ export function extract(urlString: string): string {
 
 	const lastSlash: number = url.pathname.lastIndexOf('/');
 	let title: string = url.pathname.substring(lastSlash + 1);
-	let hash = url.hash;
+	let hash: string = url.hash;
 
 	// JIRA handling: preserve '-'
 	if (url.hostname.toLowerCase().indexOf('jira') >= 0) {
@@ -51,11 +53,12 @@ export function extract(urlString: string): string {
 	}
 
 	// Confluence handling: insert spaces and handle fragments
-	let result = title.replaceAll(REGEX_CHARS_TO_REPLACE, ' ');
+	const separatorResult: SeparatorResult = separateWords(title); // Confluence server uses + while cloud seems to use - to separate words
+	let result: string = separatorResult.separatedText;
 	if (hash) {
 		hash = hash.substring(1);
 		// The hash gives us a big hint as how to format the case (but not the insertion of spaces) of the display name
-		let titleNoSpaces = title.replaceAll(REGEX_CHARS_TO_REPLACE, '');
+		let titleNoSpaces = result.replaceAll(' ', '');
 		if (hash.toLowerCase().startsWith(titleNoSpaces.toLowerCase())) {
 			result = toFragmentCase(result, hash);
 			hash = hash.substring(titleNoSpaces.length + 1);
@@ -65,14 +68,35 @@ export function extract(urlString: string): string {
 		}
 
 		// Append fragment
-		hash = hash.replaceAll(REGEX_CHARS_TO_REPLACE, ' ').trim();
-		result += '#' + toSentenceTitleCase(hash);
+		if (separatorResult.separator) {
+			hash = hash.replaceAll(separatorResult.separator, ' ').trim();
+		}
+		result += '#' + toSentenceTitleCase(clean(hash));
 
 	} else {
-		result = toSentenceTitleCase(title.replaceAll(REGEX_CHARS_TO_REPLACE, ' '));
+		result = toSentenceTitleCase(result);
 	}
 
 	return result;
+}
+
+/**
+ * Guesses whether the words in the given text is separated by dashes '-' or pluses '+' and replaces them with spaces ' '
+ * @param text string of words separated by dashes or pluses
+ * @returns a SeparatorResult containing the word space separated and the regex used, or the original text if the word separator cannot be determined
+ */
+export function separateWords(text: string): SeparatorResult {
+	// Guess whether the words are separated by dashes or pluses
+	let matches = text.match(REGEX_DASH_WORD_SEPARATOR);
+	let dashCount: number = matches ? matches.length : 0;
+	matches = text.match(REGEX_PLUS_WORD_SEPARATOR);
+	let plusCount: number = matches ? matches.length : 0;
+	if (dashCount > plusCount) {
+		return new SeparatorResult(text.replaceAll('-', ' '), '-'); //TODO probably should replace using the regex since some dashes shouldn't be replaced e.g. "Category - Sub Category". Need to find an example.
+	} else if (plusCount > dashCount) {
+		return new SeparatorResult(text.replaceAll('+', ' '), '+');
+	}
+	return new SeparatorResult(text, undefined);
 }
 
 /**
@@ -91,7 +115,7 @@ function toSentenceTitleCase(text: string): string {
 /**
  * Converts the given sentence using the same case as given fragment. This is useful in sites such as Confluence where the path is always lower case but the fragment has the case of the title of the page.
  * @param text the sentence with spaces (this function doesn't add new spaces)
- * @param fragment the fragment which must not have space. Can be longer than the sentence (i.e. has a genuine fragment at the end)
+ * @param fragment the fragment which must not have spaces. Can be longer than the sentence (i.e. has a genuine fragment at the end)
  * @returns the sentence using the fragment's case
  */
 function toFragmentCase(text: string, fragment: string): string {
@@ -107,4 +131,22 @@ function toFragmentCase(text: string, fragment: string): string {
 		}
 	}
 	return result.join('');
+}
+
+function clean(text: string): string {
+	let result: string = text;
+	if (result.charAt(0) === '_') {
+		result = result.substring(1);
+	}
+	return decodeURI(result).trim();
+}
+
+class SeparatorResult {
+	separatedText: string;
+	separator: string | undefined;
+
+	constructor(separatedText: string, separator: string | undefined) {
+		this.separatedText = separatedText;
+		this.separator = separator;
+	}
 }
