@@ -1,11 +1,5 @@
 # Contributing
 
-## TODO
-
-* Test Sharepoint URL
-* Craft pre-release checklist
-* Publish to Marketplace
-
 ## Development Environment Setup
 
 Install requirements:
@@ -15,8 +9,8 @@ Install requirements:
 
 Then run:
 
-``$ npm install``
-
+* ``$ npm install``
+* ``$ npm install -g @vscode/vsce``
 
 ## Testing
 
@@ -34,7 +28,7 @@ Reload the window to take the latest code changes.
 
 ### Checklist
 
-1. Lint
+1. Lint with ``npm run lint``
 1. Update version number in:
 	* [package.json](package.json)
 	* _Release Notes_ section in [README.md](README.md)

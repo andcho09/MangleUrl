@@ -1,3 +1,5 @@
+import path = require("path");
+
 export enum OutputFormat {
 	displayNameOnly, // Just the display name only
 	href, // A href with extracted display name and original URL
@@ -5,9 +7,9 @@ export enum OutputFormat {
 	markdown // A link in Markdown format [<display name>](URL)]
 }
 
-const REGEX_CHARS_TO_REPLACE = /[+_]/g;
 const REGEX_DASH_WORD_SEPARATOR = /[A-z0-0]-[A-z0-0]/g;
 const REGEX_PLUS_WORD_SEPARATOR = /[A-z0-0]\+[A-z0-0]/g;
+const REGEX_JAVA_IDENTIFIER = /[A-z0-9]+/;
 
 /**
  * For the given the URL and display name to the specified output format.
@@ -47,9 +49,49 @@ export function extract(urlString: string): string {
 	let title: string = url.pathname.substring(lastSlash + 1);
 	let hash: string = url.hash;
 
+	let hostnameLower: string = url.hostname.toLowerCase();
+
 	// JIRA handling: preserve '-'
-	if (url.hostname.toLowerCase().indexOf('jira') >= 0) {
+	if (hostnameLower.indexOf('jira') >= 0) {
 		return title;
+	}
+
+	// SharePoint handling
+	if (hostnameLower.indexOf('sharepoint.com') >= 0) {
+		let fileParam: string | null = url.searchParams.get('file');
+		if (fileParam) {
+			return fileParam;
+		}
+
+		let idParam: string | null = url.searchParams.get('id');
+		let pathname = idParam ? idParam : url.pathname;
+		let sitesIndex = pathname.indexOf('sites/');
+		return decodeURI(pathname.substring(sitesIndex + 6).replace('/', ':'));
+	}
+
+	// Javadoc handling
+	if (url.pathname.toLowerCase().indexOf('javadoc') >= 0) {
+		let result: string = '';
+		let paths: string[] = url.pathname.split('/');
+		for (let i: number = paths.length - 2; i >= 0; i--) {
+			const path: string = paths[i];
+			if (path.indexOf('.') < 0) {
+				result = path + '.' + result; // Legal Java package names do not have periods '.'
+			} else {
+				break;
+			}
+		}
+		const dotIndex: number = title.indexOf('.');
+		if (dotIndex > 0) {
+			result += title.substring(0, dotIndex);
+		} else {
+			result += title;
+		}
+		const methodNameMatch = REGEX_JAVA_IDENTIFIER.exec(url.hash);
+		if (methodNameMatch) {
+			result += '#' + methodNameMatch[0];
+		}
+		return result;
 	}
 
 	// Confluence handling: insert spaces and handle fragments
