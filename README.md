@@ -10,7 +10,9 @@ VS Code extension that formats highlighted URLs in the text editor.
 **Recognises URLs for**:
 
 * Confluence
+* Javadoc URLs (handling triggers when the url contains 'javadoc')
 * JIRA
+* SharePoint URLs
 * And can be used on other sites. YMMV.
 
 **Detection of**:
@@ -35,6 +37,14 @@ The HTML href output format updates the clipboard with ``text/plain`` content. T
 
 
 ## Release Notes
+
+### 0.0.3 - 2023-07-30
+
+Added detection and handling of:
+
+* Confluence server URLs
+* Javadoc URLs (handling triggers when the url contains 'javadoc')
+* SharePoint URLs
 
 ### 0.0.2 - 2023-07-15
 
