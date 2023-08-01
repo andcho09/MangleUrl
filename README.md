@@ -38,6 +38,10 @@ The HTML href output format updates the clipboard with ``text/plain`` content. T
 
 ## Release Notes
 
+### 0.0.4 - 2023-08-01
+
+Added detection of Confluence URLs in ``/viewpage.action?spaceKey=...&title=...`` format.
+
 ### 0.0.3 - 2023-07-30
 
 Added detection and handling of:

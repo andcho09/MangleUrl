@@ -25,6 +25,9 @@ suite('URL Mangler Extension Test Suite', () => {
 			assert.strictEqual(extract('https://confluence.intranet/display/Space/Page+With+Spaces+-+And+Dashes'), 'Page With Spaces - And Dashes');
 			assert.strictEqual(extract('https://confluence.intranet/display/Space/Page+With+Spaces+-+And+Dashes#PageWithSpaces-AndDashes#Anchor Target'), 'Page With Spaces - And Dashes#Anchor Target');
 		});
+		it('Confluence server with space and title params', function () {
+			assert.strictEqual(extract('https://confluence.server/pages/viewpage.action?spaceKey=MySpace&title=Page+In+Space+Title+Format#PageInSpaceTitleFormat-Proposedoption'), 'Page In Space Title Format#Proposedoption');
+		});
 		it('JIRA', function () {
 			assert.strictEqual(extract('https://jira.atlassian.com/browse/CONFCLOUD-74340'), 'CONFCLOUD-74340');
 			assert.strictEqual(extract('https://jira.atlassian.com/browse/CONFCLOUD-74340?filter=-5'), 'CONFCLOUD-74340');

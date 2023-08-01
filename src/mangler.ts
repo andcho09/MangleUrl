@@ -94,7 +94,11 @@ export function extract(urlString: string): string {
 		return result;
 	}
 
-	// Confluence handling: insert spaces and handle fragments
+	// Confluence handling
+	if (url.searchParams.has('spaceKey') && url.searchParams.has('title')) {
+		// Confluence URL format with "viewpage.action" as the pathname and "spaceKey" and "title" query params
+		title = url.searchParams.get('title')!;
+	}
 	const separatorResult: SeparatorResult = separateWords(title); // Confluence server uses + while cloud seems to use - to separate words
 	let result: string = separatorResult.separatedText;
 	if (hash) {

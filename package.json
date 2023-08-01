@@ -3,7 +3,7 @@
   "displayName": "URL Mangler",
   "description": "Mangles URLs to extract the human readable display name for the URL.",
   "publisher": "andcho09",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "engines": {
     "vscode": "^1.79.0"
   },
