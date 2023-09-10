@@ -123,7 +123,7 @@ export function extract(urlString: string): string {
 		result = toSentenceTitleCase(result);
 	}
 
-	return result;
+	return decodeURIComponent(result);
 }
 
 /**
