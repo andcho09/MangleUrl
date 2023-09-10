@@ -66,4 +66,13 @@ suite('URL Mangler Extension Test Suite', () => {
 			assert.strictEqual(separateWords('Page+With+Spaces+-+And+Dashes').separatedText, 'Page With Spaces - And Dashes');
 		});
 	});
+
+	describe('Trim white space', function () {
+		it('Trim spaces', function () {
+			assert.strictEqual(extract(' https://jira.atlassian.com/browse/CONFCLOUD-74340 '), 'CONFCLOUD-74340');
+		});
+		it('Trim new lines', function () {
+			assert.strictEqual(extract(' \n https://jira.atlassian.com/browse/CONFCLOUD-74340 \n '), 'CONFCLOUD-74340');
+		});
+	});
 });
