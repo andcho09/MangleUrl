@@ -38,6 +38,10 @@ The HTML href output format updates the clipboard with ``text/plain`` content. T
 
 ## Release Notes
 
+### 0.0.5 - 2023-09-20
+
+Decode URI components, e.g. ``%3A`` = ``:``, ``%28`` = ``(``
+
 ### 0.0.4 - 2023-08-01
 
 Added detection of Confluence URLs in ``/viewpage.action?spaceKey=...&title=...`` format.
