@@ -28,6 +28,15 @@ suite('URL Mangler Extension Test Suite', () => {
 		it('Confluence server with space and title params', function () {
 			assert.strictEqual(extract('https://confluence.server/pages/viewpage.action?spaceKey=MySpace&title=Page+In+Space+Title+Format#PageInSpaceTitleFormat-Proposedoption'), 'Page In Space Title Format#Proposedoption');
 		});
+		it('Confluence server with encoded URI characters', function () {
+			assert.strictEqual(extract('https://confluence.server/display/Space/Page+With%3A+Colon'), 'Page With: Colon');
+
+			// TODO is this a real example? Also should we disable title case here since we don't need to guess
+			assert.strictEqual(extract('https://confluence.server/display/Space/Page+with+%28brackets%29+-+and+dashes'), 'Page With (brackets) - And Dashes');
+		});
+		it('Confluence server with attachments', function () {
+			assert.strictEqual(extract('https://confluence.server/download/attachments/12345678/Example%20Request%20Topic.json?api=v2'), 'Example Request Topic.json');
+		});
 		it('JIRA', function () {
 			assert.strictEqual(extract('https://jira.atlassian.com/browse/CONFCLOUD-74340'), 'CONFCLOUD-74340');
 			assert.strictEqual(extract('https://jira.atlassian.com/browse/CONFCLOUD-74340?filter=-5'), 'CONFCLOUD-74340');
@@ -64,6 +73,15 @@ suite('URL Mangler Extension Test Suite', () => {
 	describe('Separate words', function () {
 		it('Separate pluses but not dashes', function () {
 			assert.strictEqual(separateWords('Page+With+Spaces+-+And+Dashes').separatedText, 'Page With Spaces - And Dashes');
+		});
+	});
+
+	describe('Trim white space', function () {
+		it('Trim spaces', function () {
+			assert.strictEqual(extract(' https://jira.atlassian.com/browse/CONFCLOUD-74340 '), 'CONFCLOUD-74340');
+		});
+		it('Trim new lines', function () {
+			assert.strictEqual(extract(' \n https://jira.atlassian.com/browse/CONFCLOUD-74340 \n '), 'CONFCLOUD-74340');
 		});
 	});
 });

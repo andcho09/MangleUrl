@@ -39,7 +39,7 @@ export function formatDisplayName(urlString: string, displayName: string, output
 export function extract(urlString: string): string {
 	let url: URL;
 	try {
-		url = new URL(urlString);
+		url = new URL(urlString.trim());
 	} catch (err) {
 		// Not a URL
 		return '';
@@ -123,7 +123,7 @@ export function extract(urlString: string): string {
 		result = toSentenceTitleCase(result);
 	}
 
-	return result;
+	return decodeURIComponent(result);
 }
 
 /**
