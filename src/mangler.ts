@@ -69,6 +69,23 @@ export function extract(urlString: string): string {
 		return decodeURI(pathname.substring(sitesIndex + 6).replace('/', ':'));
 	}
 
+	// GitLab handling
+	if (hostnameLower.indexOf('gitlab.com') >= 0) {
+		const foundPrefixResult: [string, number] | null = findSrcPrefix(url.pathname);
+		if (foundPrefixResult) {
+			let path: string = url.pathname.substring(foundPrefixResult[1] + foundPrefixResult[0].length + 1);
+			const extensionIndex = path.lastIndexOf('.');
+			if (extensionIndex > 0) {
+				const extension: string = path.substring(extensionIndex);
+				if (extension === '.java') {
+					path = path.substring(0, extensionIndex); // Remove extension
+					path = path.replaceAll('/', '.'); // And convert to a Java qualified name
+				}
+			}
+			return path + url.hash;
+		}
+	}
+
 	// Javadoc handling
 	if (url.pathname.toLowerCase().indexOf('javadoc') >= 0) {
 		let result: string = '';
@@ -182,6 +199,22 @@ function toFragmentCase(text: string, fragment: string): string {
 		}
 	}
 	return result.join('');
+}
+
+/**
+ * Looks for common source code URL path, e.g. "src/main/java", "src/test/java"
+ * @param url the URL to check
+ * @returns an array of [the path found, index of the found path] or null if no matches found
+ */
+function findSrcPrefix(url: string): [string, number] | null {
+	const lowerUrl: string = url.toLowerCase();
+	for (const path of ['src/main/java', 'src/test/java', 'src/java', 'src/main', 'src/test', 'src']) {
+		const index = lowerUrl.indexOf(path);
+		if (lowerUrl.indexOf(path) >= 0) {
+			return [path, index];
+		}
+	}
+	return null;
 }
 
 function clean(text: string): string {

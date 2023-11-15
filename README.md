@@ -10,6 +10,7 @@ VS Code extension that formats highlighted URLs in the text editor.
 **Recognises URLs for**:
 
 * Confluence
+* GitLab URLs
 * Javadoc URLs (handling triggers when the url contains 'javadoc')
 * JIRA
 * SharePoint URLs
@@ -37,6 +38,10 @@ The HTML href output format updates the clipboard with ``text/plain`` content. T
 
 
 ## Release Notes
+
+### 0.0.6 - 2023-11-15
+
+Added initial Gitlab support which attempts to find the ``src`` part of the URL and converts Java classes to their qualified name
 
 ### 0.0.5 - 2023-09-20
 

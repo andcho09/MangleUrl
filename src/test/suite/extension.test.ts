@@ -56,6 +56,12 @@ suite('URL Mangler Extension Test Suite', () => {
 		it('Javadoc', function () {
 			assert.strictEqual(extract('https://documentation-server/build/javadoc/com.company.package/com/company/package/spi/InterfaceProvider.html#resolve-java.util.Collection-java.util.Map-java.util.Locale-'), 'com.company.package.spi.InterfaceProvider#resolve');
 		});
+		it('Gitlab', function () {
+			assert.strictEqual(extract('https://gitlab.com/ongresinc/stackgres/-/blob/main/stackgres-k8s/src/jobs/src/main/java/io/stackgres/jobs/Main.java?ref_type=heads'), 'io.stackgres.jobs.Main');
+			assert.strictEqual(extract('https://gitlab.com/ongresinc/stackgres/-/blob/main/stackgres-k8s/src/jobs/src/main/java/io/stackgres/jobs/Main.java?ref_type=heads#L22'), 'io.stackgres.jobs.Main#L22');
+			assert.strictEqual(extract('https://gitlab.com/ongresinc/stackgres/-/blob/main/stackgres-k8s/src/operator/src/test/java/io/stackgres/operator/conciliation/factory/cluster/patroni/PatroniTest.java'), 'io.stackgres.operator.conciliation.factory.cluster.patroni.PatroniTest');
+			assert.strictEqual(extract('https://gitlab.com/ongresinc/stackgres/-/blob/release-1.6.0/stackgres-k8s/src/admin-ui/src/components/ClusterEvents.vue?ref_type=heads#L4'), 'admin-ui/src/components/ClusterEvents.vue#L4');
+		});
 	});
 
 	describe('Extract with output formatting', function () {
