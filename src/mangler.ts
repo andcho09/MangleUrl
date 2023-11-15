@@ -49,7 +49,7 @@ export function extract(urlString: string): string {
 	let title: string = url.pathname.substring(lastSlash + 1);
 	let hash: string = url.hash;
 
-	let hostnameLower: string = url.hostname.toLowerCase();
+	const hostnameLower: string = url.hostname.toLowerCase();
 
 	// JIRA handling: preserve '-'
 	if (hostnameLower.indexOf('jira') >= 0) {
@@ -58,21 +58,21 @@ export function extract(urlString: string): string {
 
 	// SharePoint handling
 	if (hostnameLower.indexOf('sharepoint.com') >= 0) {
-		let fileParam: string | null = url.searchParams.get('file');
+		const fileParam: string | null = url.searchParams.get('file');
 		if (fileParam) {
 			return fileParam;
 		}
 
-		let idParam: string | null = url.searchParams.get('id');
-		let pathname = idParam ? idParam : url.pathname;
-		let sitesIndex = pathname.indexOf('sites/');
+		const idParam: string | null = url.searchParams.get('id');
+		const pathname = idParam ? idParam : url.pathname;
+		const sitesIndex = pathname.indexOf('sites/');
 		return decodeURI(pathname.substring(sitesIndex + 6).replace('/', ':'));
 	}
 
 	// Javadoc handling
 	if (url.pathname.toLowerCase().indexOf('javadoc') >= 0) {
 		let result: string = '';
-		let paths: string[] = url.pathname.split('/');
+		const paths: string[] = url.pathname.split('/');
 		for (let i: number = paths.length - 2; i >= 0; i--) {
 			const path: string = paths[i];
 			if (path.indexOf('.') < 0) {
@@ -104,7 +104,7 @@ export function extract(urlString: string): string {
 	if (hash) {
 		hash = hash.substring(1);
 		// The hash gives us a big hint as how to format the case (but not the insertion of spaces) of the display name
-		let titleNoSpaces = result.replaceAll(' ', '');
+		const titleNoSpaces = result.replaceAll(' ', '');
 		if (hash.toLowerCase().startsWith(titleNoSpaces.toLowerCase())) {
 			result = toFragmentCase(result, hash);
 			hash = hash.substring(titleNoSpaces.length + 1);
@@ -134,9 +134,9 @@ export function extract(urlString: string): string {
 export function separateWords(text: string): SeparatorResult {
 	// Guess whether the words are separated by dashes or pluses
 	let matches = text.match(REGEX_DASH_WORD_SEPARATOR);
-	let dashCount: number = matches ? matches.length : 0;
+	const dashCount: number = matches ? matches.length : 0;
 	matches = text.match(REGEX_PLUS_WORD_SEPARATOR);
-	let plusCount: number = matches ? matches.length : 0;
+	const plusCount: number = matches ? matches.length : 0;
 	if (dashCount > plusCount) {
 		return new SeparatorResult(text.replaceAll('-', ' '), '-'); //TODO probably should replace using the regex since some dashes shouldn't be replaced e.g. "Category - Sub Category". Need to find an example.
 	} else if (plusCount > dashCount) {
@@ -165,10 +165,10 @@ function toSentenceTitleCase(text: string): string {
  * @returns the sentence using the fragment's case
  */
 function toFragmentCase(text: string, fragment: string): string {
-	let result: string[] = [];
+	const result: string[] = [];
 	let j: number = 0;
 	for (let i: number = 0; i < text.length; i++) {
-		let c = text.charAt(i);
+		const c = text.charAt(i);
 		if (c === ' ') {
 			result.push(' '); // Advance through the input text that has spaces but not the fragment which doesn't have spaces
 		} else {
