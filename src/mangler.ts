@@ -138,12 +138,17 @@ export function separateWords(text: string): SeparatorResult {
 	matches = text.match(REGEX_PLUS_WORD_SEPARATOR);
 	const plusCount: number = matches ? matches.length : 0;
 	if (dashCount > plusCount) {
-		return new SeparatorResult(text.replaceAll('-', ' '), '-'); //TODO probably should replace using the regex since some dashes shouldn't be replaced e.g. "Category - Sub Category". Need to find an example.
+		return { separatedText: text.replaceAll('-', ' '), separator: '-' }; //TODO probably should replace using the regex since some dashes shouldn't be replaced e.g. "Category - Sub Category". Need to find an example.
 	} else if (plusCount > dashCount) {
-		return new SeparatorResult(text.replaceAll('+', ' '), '+');
+		return { separatedText: text.replaceAll('+', ' '), separator: '+' };
 	}
-	return new SeparatorResult(text, undefined);
+	return { separatedText: text };
 }
+
+type SeparatorResult = {
+	separatedText: string;
+	separator?: string | undefined;
+};
 
 /**
  * Converts a space separated sentence phrase and changes it to title case (i.e. the first letter of each word is upper case). The case of other letters is not adjusted to handle cases where upper casing has already been applied.
@@ -185,14 +190,4 @@ function clean(text: string): string {
 		result = result.substring(1);
 	}
 	return decodeURI(result).trim();
-}
-
-class SeparatorResult {
-	separatedText: string;
-	separator: string | undefined;
-
-	constructor(separatedText: string, separator: string | undefined) {
-		this.separatedText = separatedText;
-		this.separator = separator;
-	}
 }
