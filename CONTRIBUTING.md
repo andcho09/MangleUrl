@@ -4,7 +4,7 @@
 
 Install requirements:
 
-* ``Node.js`` - tested using Node 18 although VS Code's is using 16 (see _About_ menu)
+* ``Node.js`` - tested using Node 18 although VS Code's is using 20 (see _About_ menu)
 * (Optional) [nvm](https://github.com/nvm-sh/nvm)
 
 Then run:
@@ -24,7 +24,12 @@ Debug using VS Code's _Run and Debug_ using the ``Run Extension`` configuration.
 Reload the window to take the latest code changes.
 
 
-## Publishing
+## Publishing to VS Code Marketplace
+
+### First-time setup
+
+1. Sign up for a [Azure Personal Access Token](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#get-a-personal-access-token)
+1. [Create a publisher for the VS Code Marketplace](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#create-a-publisher)
 
 ### Checklist
 

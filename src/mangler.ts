@@ -70,7 +70,7 @@ export function extract(urlString: string): string {
 	}
 
 	// GitLab handling
-	if (hostnameLower.indexOf('gitlab.com') >= 0) {
+	if (hostnameLower.indexOf('gitlab.com') >= 0 || url.pathname.toLowerCase().indexOf('src/main/java') > 0) {
 		const foundPrefixResult: [string, number] | null = findSrcPrefix(url.pathname);
 		if (foundPrefixResult) {
 			let path: string = url.pathname.substring(foundPrefixResult[1] + foundPrefixResult[0].length + 1);

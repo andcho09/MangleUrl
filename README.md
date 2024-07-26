@@ -39,6 +39,10 @@ The HTML href output format updates the clipboard with ``text/plain`` content. T
 
 ## Release Notes
 
+### 0.0.7 - 2023-12-01
+
+Expanded Gitlab src matching to include any URL containing ``src/main/java``
+
 ### 0.0.6 - 2023-11-15
 
 Added initial Gitlab support which attempts to find the ``src`` part of the URL and converts Java classes to their qualified name

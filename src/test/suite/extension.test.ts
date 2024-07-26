@@ -62,6 +62,9 @@ suite('URL Mangler Extension Test Suite', () => {
 			assert.strictEqual(extract('https://gitlab.com/ongresinc/stackgres/-/blob/main/stackgres-k8s/src/operator/src/test/java/io/stackgres/operator/conciliation/factory/cluster/patroni/PatroniTest.java'), 'io.stackgres.operator.conciliation.factory.cluster.patroni.PatroniTest');
 			assert.strictEqual(extract('https://gitlab.com/ongresinc/stackgres/-/blob/release-1.6.0/stackgres-k8s/src/admin-ui/src/components/ClusterEvents.vue?ref_type=heads#L4'), 'admin-ui/src/components/ClusterEvents.vue#L4');
 		});
+		it('src/main', function () {
+			assert.strictEqual(extract('https://stash.internal/projects/MyProject/repos/application_name/browse/application_name/long.package.name.prefix/src/main/java/long/package/name/prefix/internal/version/Class.java'), 'long.package.name.prefix.internal.version.Class');
+		});
 	});
 
 	describe('Extract with output formatting', function () {
