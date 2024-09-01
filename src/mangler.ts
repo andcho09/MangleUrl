@@ -45,7 +45,11 @@ export function extract(urlString: string): string {
 		return '';
 	}
 
-	const lastSlash: number = url.pathname.lastIndexOf('/');
+	let lastSlash: number = url.pathname.lastIndexOf('/');
+	if (lastSlash === url.pathname.length - 1){
+		url.pathname = url.pathname.substring(0, url.pathname.length - 1);
+		lastSlash = url.pathname.lastIndexOf('/');
+	}
 	let title: string = url.pathname.substring(lastSlash + 1);
 	let hash: string = url.hash;
 
@@ -83,6 +87,13 @@ export function extract(urlString: string): string {
 				}
 			}
 			return path + url.hash;
+		}
+	}
+
+	// Microsoft Teams
+	if (hostnameLower.indexOf('teams.microsoft.com') >= 0){
+		if (url.searchParams.has('teamName') && url.searchParams.has('channelName')){
+			return decodeURIComponent(url.searchParams.get('teamName')!) + ' > ' + decodeURIComponent(url.searchParams.get('channelName')!);
 		}
 	}
 
