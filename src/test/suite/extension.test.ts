@@ -37,6 +37,11 @@ suite('URL Mangler Extension Test Suite', () => {
 		it('Confluence server with attachments', function () {
 			assert.strictEqual(extract('https://confluence.server/download/attachments/12345678/Example%20Request%20Topic.json?api=v2'), 'Example Request Topic.json');
 		});
+		it('Confluence server with square brackets in hash', function () {
+			// TODO the fragment should be displayed as "Section Title [Brackets]" but we don't have a parser that does this
+			assert.strictEqual(extract('https://confluence.intranet/display/Space/Page+With+Spaces+-+And+Dashes#PageWithSpaces-AndDashes-SectionTitle[Brackets]'), 'Page With Spaces - And Dashes#SectionTitle[Brackets]');
+		});
+
 		it('JIRA', function () {
 			assert.strictEqual(extract('https://jira.atlassian.com/browse/CONFCLOUD-74340'), 'CONFCLOUD-74340');
 			assert.strictEqual(extract('https://jira.atlassian.com/browse/CONFCLOUD-74340?filter=-5'), 'CONFCLOUD-74340');
@@ -64,6 +69,15 @@ suite('URL Mangler Extension Test Suite', () => {
 		});
 		it('src/main', function () {
 			assert.strictEqual(extract('https://stash.internal/projects/MyProject/repos/application_name/browse/application_name/long.package.name.prefix/src/main/java/long/package/name/prefix/internal/version/Class.java'), 'long.package.name.prefix.internal.version.Class');
+		});
+		it('Colon', function () {
+			assert.strictEqual(extract('https://confluence.server/display/film/title/Movie%3A+Sequel'), 'Movie: Sequel');
+		});
+		it('Trailing slash', function () {
+			assert.strictEqual(extract('https://www.kalzumeus.com/2010/06/17/falsehoods-programmers-believe-about-names/'), 'Falsehoods Programmers Believe About Names');
+		});
+		it('Microsoft Teams', function () {
+			assert.strictEqual(extract('https://teams.microsoft.com/l/message/12:1234567890abcdef@thread.abc123/1234567890?tenantId=<guid>&groupId=<guid>&parentMessageId=1234567890&teamName=Team%20With%20Spaces&channelName=channel-name-with-hyphen&createdTime=1723424787071'), 'Team With Spaces > channel-name-with-hyphen');
 		});
 	});
 
