@@ -39,6 +39,10 @@ The HTML href output format updates the clipboard with ``text/plain`` content. T
 
 ## Release Notes
 
+### 0.0.9 - 2024-09-08
+
+Security updates of dependencies
+
 ### 0.0.8 - 2024-09-01
 
 * Support Microsoft Teams URLs
