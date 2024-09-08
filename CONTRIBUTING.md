@@ -36,6 +36,7 @@ Reload the window to take the latest code changes.
 1. Lint with ``npm run lint``
 1. Update version number in:
 	* [package.json](package.json)
+	* [package-lock.json](package-lock.json)
 	* _Release Notes_ section in [README.md](README.md)
 1. Run ``$ vsce package``
 1. Test the package with a [vsce deployment](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#vsce):
