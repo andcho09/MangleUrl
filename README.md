@@ -39,6 +39,10 @@ The HTML href output format updates the clipboard with ``text/plain`` content. T
 
 ## Release Notes
 
+### 0.0.10 - 2024-11-30
+
+Security updates of dependencies
+
 ### 0.0.9 - 2024-09-08
 
 Security updates of dependencies

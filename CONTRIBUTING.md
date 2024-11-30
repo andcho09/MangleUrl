@@ -4,7 +4,7 @@
 
 Install requirements:
 
-* ``Node.js`` - tested using Node 18 although VS Code's is using 20 (see _About_ menu)
+* ``Node.js`` - tested using Node 20. See what version VS Code's under the _Help > About_ menu).
 * (Optional) [nvm](https://github.com/nvm-sh/nvm)
 
 Then run:
@@ -19,7 +19,7 @@ Launch tests from VS Code's _Run and Debug_ using the ``Extension Tests`` config
 
 ## Debugging
 
-Debug using VS Code's _Run and Debug_ using the ``Run Extension`` configuration.
+Debug using VS Code's _Run and Debug_ using the ``Run Extension`` configuration. You might need to run `npm package` first.
 
 Reload the window to take the latest code changes.
 
