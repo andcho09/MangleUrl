@@ -132,7 +132,7 @@ export function extract(urlString: string): string {
 	if (hash) {
 		hash = hash.substring(1);
 		// The hash gives us a big hint as how to format the case (but not the insertion of spaces) of the display name
-		const titleNoSpaces = result.replaceAll(' ', '');
+		const titleNoSpaces = decodeURIComponent(result.replaceAll(' ', ''));
 		if (hash.toLowerCase().startsWith(titleNoSpaces.toLowerCase())) {
 			result = toFragmentCase(result, hash);
 			hash = hash.substring(titleNoSpaces.length + 1);

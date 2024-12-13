@@ -39,6 +39,11 @@ The HTML href output format updates the clipboard with ``text/plain`` content. T
 
 ## Release Notes
 
+### 0.0.11 - 2024-12-13
+
+* Fixed Confluence page fragment detection when the page title has encoded characters in it
+* Security updates of dependencies
+
 ### 0.0.10 - 2024-11-30
 
 Security updates of dependencies
