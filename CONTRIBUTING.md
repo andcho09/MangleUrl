@@ -4,7 +4,7 @@
 
 Install requirements:
 
-* ``Node.js`` - tested using Node 20. See what version VS Code's under the _Help > About_ menu).
+* ``Node.js`` - tested using Node 22. See what version VS Code's under the _Help > About_ menu).
 * (Optional) [nvm](https://github.com/nvm-sh/nvm)
 
 Then run:
